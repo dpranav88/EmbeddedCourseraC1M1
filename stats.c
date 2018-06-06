@@ -43,8 +43,10 @@ void main() {
 			7,  87, 250, 230,  99,   3, 100,  90};
 
 	/* Other Variable Declarations Go Here */
+	unsigned int lenghOfArray = SIZE;
 	/* Statistics and printing Functions Go Here */
 
+	print_statistics(test, lenghOfArray);
 
 }
 
@@ -53,40 +55,96 @@ void main() {
 
 float find_mean(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	unsigned int i =0;
+	float meanVal = 0.0f;
+
+	for (i = 0;i <= lenghOfArray-1;i++)
+	{
+		meanVal +=  ((float)(array[i]));
+	}
+
+	meanVal = meanVal/((float)lenghOfArray);
+	return meanVal;
 } 
 
 void print_array(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	unsigned int i =0;
+
+	for (i = 0;i <= lenghOfArray-1;i++)
+	{
+		if(((i+1)%10 == 0) || ((i+1) == lenghOfArray ))
+		{
+			printf("Array[%d] = %d,\n", i, array[i]);
+		}
+		else
+		{
+			printf("Array[%d] = %d,\t", i, array[i]);
+		}
+	}
+
 }
 
 
 void sort_array(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	unsigned int i =0, j =0;
+
+	for (i=0; i<lenghOfArray-1; i++)
+	{
+		for (j=i+1; j<lenghOfArray; j++)
+		{
+			if(array[j] > array[i])
+			{
+				array[j] = array[j] + array[i];
+				array[i] = array[j] - array[i];
+				array[j] = array[j] - array[i];
+
+			}
+
+		}
+	}
 }
 
 float find_median(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	//sort_array(array, lenghOfArray);
+
+	if((lenghOfArray%2) == 0)
+		return (((float)array[((unsigned int)(lenghOfArray/2))]) + ((float)array[((unsigned int)(lenghOfArray/2)) +1]))/2.0;
+	else
+		return ((float)array[((unsigned int)(lenghOfArray/2))]);
 
 }
 
 
 unsigned char find_min(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	//sort_array(array, lenghOfArray);
+
+	return array[SIZE-1];
 
 }
 
 unsigned char find_max(unsigned char array[SIZE], unsigned int lenghOfArray)
 {
-	
+	sort_array(array, lenghOfArray);
+
+	return array[0];
 
 }
 
 void print_statistics(unsigned char test[SIZE], unsigned int lenghOfArray)
 {
-	
+	printf("\nThe original Array is:\n");
+	print_array(test, lenghOfArray);
+
+	sort_array(test,  lenghOfArray);
+	printf("\nThe sorted Array is:\n");
+	print_array(test, lenghOfArray);
+
+	printf("\nMinimum value of Array is: %d\n", find_min(test, lenghOfArray));
+	printf("\nMaximum value of Array is: %d\n", find_max(test, lenghOfArray));
+	printf("\nMean value of Array is: %f\n", find_mean(test, lenghOfArray));
+	printf("\nMedian value of Array is: %f\n", find_median(test, lenghOfArray));
 }
